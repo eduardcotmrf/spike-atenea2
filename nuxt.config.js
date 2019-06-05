@@ -1,7 +1,4 @@
 module.exports = {
-  /*
-  ** Headers of the page
-  */
   head: {
     title: 'my-project',
     meta: [
@@ -13,18 +10,16 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  router: { base: '/my-project/' },
-  /*
-  ** Customize the progress bar color
-  */
   loading: { color: '#3B8070' },
-  /*
-  ** Build configuration
-  */
+  modules: [
+    'nuxtent'
+  ],
+  router: {
+    extendRoutes (routes) {
+      routes.find((r) => r.path.includes('docs/:section?/:slug')).path = '/docs/*:slug'
+    }
+  },
   build: {
-    /*
-    ** Run ESLint on save
-    */
     extend (config, { isDev, isClient }) {
       if (isDev && isClient) {
         config.module.rules.push({

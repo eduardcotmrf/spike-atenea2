@@ -1,33 +1,39 @@
 <template>
-  <section class="container">
+  <div>
     <div>
-      <app-logo/>
-      <h1 class="title">
-        my-project
-      </h1>
-      <h2 class="subtitle">
-        Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+      <ul>
+         <li v-for="item in readmes" v-bind:key="item.id">
+          <nuxt-link :to="getLink(item)">{{ item.title }}</nuxt-link>
+        </li>
+      </ul>
     </div>
-  </section>
+    <section class="container">
+      <div>
+        <h1 class="title">
+          Atenea 2
+        </h1>
+        <div class="links">
+          <nuxt />
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
+import LateralMenu from '~/components/LateralMenu.vue'
 
 export default {
   components: {
-    AppLogo
+    LateralMenu
+  },
+  asyncData: async ({ app, route }) => ({
+    readmes: await app.$content('docs').getAll()
+  }),
+  methods: {
+    getLink(item) {
+      return`${item.permalink}`;
+    }
   }
 }
 </script>
